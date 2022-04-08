@@ -1,0 +1,24 @@
+.albumArt {
+    width: 500px;
+    border-radius: 5%;
+}
+
+.songTitle {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.songRating {
+    font-size: 14px;
+}
+
+.artistName {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.albumName {
+    font-size: 16px;
+    font-weight: lighter;
+}
+
