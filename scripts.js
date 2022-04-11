@@ -1,8 +1,16 @@
 console.log("iTunes JS is connected");
 
 let interface = document.querySelector("#overview");
+let searchBar = document.querySelector("#searchBar");
+searchBar.addEventListener("keydown", finalSearch);
 
-fetch("https://itunes.apple.com/search?term=tate+mcrae", {
+var defaultSearch = "https://itunes.apple.com/search?term=tate+mcrae";
+var userSearch = defaultSearch.slice(0, 10) + searchBar.value;
+// var (finalSearch) {
+
+// }
+
+fetch("userSearch", {
   method: "GET",
   //   headers: {},
 })
