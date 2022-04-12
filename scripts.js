@@ -1,24 +1,30 @@
 console.log("iTunes JS is connected");
 
 let searchBar = document.querySelector("#searchBar");
-
 let resultView = document.querySelector("#resultView");
-// let albumArtContainer = document.querySelector("#albumArtContainer");
-// let songDetails = document.querySelector("#songDetails");
 
-// searchBar.addEventListener("keydown", finalSearch);
+// search interface logic goes here:
 
-var defaultSearch = "https://proxy-itunes-api.glitch.me/search?term=tate+mcrae";
-// var userSearch = defaultSearch.slice(0, 10) + searchBar.value;
+// Default search parameters:
+const appleServer = "https://itunes.apple.com/search?term=";
+const proxyServer = "https://proxy-itunes-api.glitch.me/search?term=";
+let searchTerm = "tate+mcrae";
+let searchType = "&media=music";
+let searchExplicitness = "&explicit=y";
 
-var appleServer = "https://itunes.apple.com/search?term=";
-var proxyServer = "https://proxy-itunes.api.glitch.me/search?term=";
+// button setup logic goes here
+let explicitPermission = document.querySelector("#explicitPermission");
+explicitPermission.addEventListener("change", function () {
+  if (explicitPermission.checked) {
+    let searchExplicitness = "&explicit=y";
+    console.log(searchExplicitness);
+  } else {
+    let searchExplicitness = "&explict=n";
+    console.log(searchExplicitness);
+  }
+});
 
-var searchTerm = "tate+mcrae";
-
-var searchType = "&media=music";
-
-fetch(`${appleServer}${searchTerm}${searchType}`, {
+fetch(`${proxyServer}${searchTerm}${searchType}${searchExplicitness}`, {
   method: "GET",
   //   headers: {},
 })
