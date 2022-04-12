@@ -6,13 +6,60 @@ let resultView = document.querySelector("#resultView");
 // search interface logic goes here:
 
 // Default search parameters:
-const appleServer = "https://itunes.apple.com/search?term=";
-const proxyServer = "https://proxy-itunes-api.glitch.me/search?term=";
-let searchTerm = "tate+mcrae";
+const appleServerLink = "https://itunes.apple.com/search";
+const proxyServerLink = "https://proxy-itunes-api.glitch.me/search";
+let serverSetup = appleServerLink;
+let searchTerm = "?term=tate+mcrae";
 let searchType = "&media=music";
+let searchEntity = "&entity=musicArtist";
 let searchExplicitness = "&explicit=y";
 
 // button setup logic goes here
+let artistOption = document.querySelector("#artistOption");
+artistOption.addEventListener("change", function () {
+  if (artistOption.checked) {
+    songOption.checked = false;
+    albumOption.checked = false;
+    genreOption.checked = false;
+    let searchEntity = "&entity=musicArtist";
+    console.log(searchEntity);
+  } else {
+  }
+});
+let songOption = document.querySelector("#songOption");
+songOption.addEventListener("change", function () {
+  if (songOption.checked) {
+    artistOption.checked = false;
+    albumOption.checked = false;
+    genreOption.checked = false;
+    let searchEntity = "&entity=song";
+    console.log(searchEntity);
+  } else {
+  }
+});
+let albumOption = document.querySelector("#albumOption");
+albumOption.addEventListener("change", function () {
+  if (albumOption.checked) {
+    artistOption.checked = false;
+    songOption.checked = false;
+    genreOption.checked = false;
+    let searchEntity = "&entity=album";
+    console.log(searchEntity);
+  } else {
+  }
+});
+let genreOption = document.querySelector("#genreOption");
+genreOption.addEventListener("change", function () {
+  if (genreOption.checked) {
+    artistOption.checked = false;
+    songOption.checked = false;
+    albumOption.checked = false;
+    // let searchEntity = "&entity=album";
+    console.log(searchEntity);
+  } else {
+  }
+});
+
 let explicitPermission = document.querySelector("#explicitPermission");
 explicitPermission.addEventListener("change", function () {
   if (explicitPermission.checked) {
@@ -23,8 +70,26 @@ explicitPermission.addEventListener("change", function () {
     console.log(searchExplicitness);
   }
 });
+let defaultServer = document.querySelector("#defaultServer");
+defaultServer.addEventListener("change", function () {
+  if (defaultServer.checked) {
+    proxyServer.checked = false;
+    let serverSetup = appleServerLink;
+    console.log(serverSetup);
+  } else {
+  }
+});
+let proxyServer = document.querySelector("#proxyServer");
+proxyServer.addEventListener("change", function () {
+  if (proxyServer.checked) {
+    defaultServer.checked = false;
+    let serverSetup = proxyServerLink;
+    console.log(serverSetup);
+  } else {
+  }
+});
 
-fetch(`${proxyServer}${searchTerm}${searchType}${searchExplicitness}`, {
+fetch(`${serverSetup}${searchTerm}${searchType}${searchExplicitness}`, {
   method: "GET",
   //   headers: {},
 })
