@@ -1,16 +1,13 @@
 console.log("iTunes JS is connected");
 
-let interface = document.querySelector("#overview");
+let albumArtContainer = document.querySelector("#albumArtContainer");
 let searchBar = document.querySelector("#searchBar");
-searchBar.addEventListener("keydown", finalSearch);
+// searchBar.addEventListener("keydown", finalSearch);
 
-var defaultSearch = "https://itunes.apple.com/search?term=tate+mcrae";
-var userSearch = defaultSearch.slice(0, 10) + searchBar.value;
-// var (finalSearch) {
+var defaultSearch = "https://proxy-itunes-api.glitch.me/search?term=tate+mcrae";
+// var userSearch = defaultSearch.slice(0, 10) + searchBar.value;
 
-// }
-
-fetch("userSearch", {
+fetch("https://proxy-itunes-api.glitch.me/search?term=tate+mcrae", {
   method: "GET",
   //   headers: {},
 })
@@ -33,10 +30,10 @@ fetch("userSearch", {
       console.log(albumArtConvertedLink);
 
       let albumArt = document.createElement("img");
-      interface.appendChild(albumArt);
       //   albumArt.src = singleResult.artworkUrl100;
       albumArt.src = albumArtConvertedLink;
       albumArt.classList.add("albumArt");
+      albumArtContainer.appendChild(albumArt);
 
       let songTitle = document.createElement("p");
       interface.appendChild(songTitle);

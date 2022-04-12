@@ -1,5 +1,12 @@
+#resultsDisplay {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
 .albumArt {
-    width: 500px;
+    width: 15%;
     border-radius: 5%;
 }
 
