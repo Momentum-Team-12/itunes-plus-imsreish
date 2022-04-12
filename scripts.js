@@ -11,7 +11,14 @@ let resultView = document.querySelector("#resultView");
 var defaultSearch = "https://proxy-itunes-api.glitch.me/search?term=tate+mcrae";
 // var userSearch = defaultSearch.slice(0, 10) + searchBar.value;
 
-fetch("https://proxy-itunes-api.glitch.me/search?term=tate+mcrae&media=music", {
+var appleServer = "https://itunes.apple.com/search?term=";
+var proxyServer = "https://proxy-itunes.api.glitch.me/search?term=";
+
+var searchTerm = "tate+mcrae";
+
+var searchType = "&media=music";
+
+fetch(`${appleServer}${searchTerm}${searchType}`, {
   method: "GET",
   //   headers: {},
 })
@@ -58,7 +65,7 @@ fetch("https://proxy-itunes-api.glitch.me/search?term=tate+mcrae&media=music", {
 
       let albumName = document.createElement("p");
       albumName.innerText = singleResult.collectionName;
-      console.log(singleResult.albumName);
+      console.log(singleResult.collectionName);
       songDetails.appendChild(albumName);
 
       let resultContainer = document.createElement("div");

@@ -3,12 +3,12 @@
     align-items: center;
 }
 
-#resultsDisplay {
+/* #resultsDisplay {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
-}
+} */
 
 .albumArt {
     width: 15%;
