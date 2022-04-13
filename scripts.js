@@ -1,21 +1,53 @@
 console.log("iTunes JS is connected");
 
-let searchBar = document.querySelector("#searchBar");
+// Declaring container div for all results
 let resultView = document.querySelector("#resultView");
+//
 
-// search interface logic goes here:
+// Random assortment of 'starter searches' to be implemented here:
+//
 
-// Default search parameters:
-const appleServerLink = "https://itunes.apple.com/search";
-const proxyServerLink = "https://proxy-itunes-api.glitch.me/search";
+// INITIAL SETUP- contructing a search and defining its default parameters:
+// domain:
+const appleServerLink = "https://itunes.apple.com/";
+const proxyServerLink = "https://proxy-itunes-api.glitch.me/";
 let serverSetup = appleServerLink;
-let searchTerm = "?term=tate+mcrae";
-let searchType = "&media=music";
+// query string:
+const serverQuery = "search?term=";
+// This will refer to the 'starter searches' referenced above, and may be changed by the user:
+let searchTerm = encodeURIComponent(`${"tate mcrae"}`);
+// This may not be changed:
+const searchType = "&media=music";
+// These may also be changed by the user:
 let searchEntity = "&entity=musicArtist";
 let searchExplicitness = "&explicit=y";
+// the full link to GET:
+let linkToGET = `${serverSetup}${serverQuery}${searchTerm}${searchType}${searchExplicitness}`;
+//
 
-// button setup logic goes here
+// search interface logic is built here:
+let searchBar = document.querySelector("#searchBar");
+searchBar.addEventListener("change", function () {
+  if (searchBar.value !== null) {
+    let searchTerm = encodeURIComponent(`${searchBar.value}`);
+    console.log(searchTerm);
+  } else {
+  }
+});
+
+// button logic is built here, in order of appearance:
+// search refiners:
 let artistOption = document.querySelector("#artistOption");
+let songOption = document.querySelector("#songOption");
+let albumOption = document.querySelector("#albumOption");
+let genreOption = document.querySelector("#genreOption");
+// explicit permission option:
+let explicitPermission = document.querySelector("#explicitPermission");
+// server selector:
+let defaultServer = document.querySelector("#defaultServer");
+let proxyServer = document.querySelector("#proxyServer");
+// event listeners/functions for each of these elements, in order of appearance:
+// search refiners:
 artistOption.addEventListener("change", function () {
   if (artistOption.checked) {
     songOption.checked = false;
@@ -26,7 +58,6 @@ artistOption.addEventListener("change", function () {
   } else {
   }
 });
-let songOption = document.querySelector("#songOption");
 songOption.addEventListener("change", function () {
   if (songOption.checked) {
     artistOption.checked = false;
@@ -37,7 +68,6 @@ songOption.addEventListener("change", function () {
   } else {
   }
 });
-let albumOption = document.querySelector("#albumOption");
 albumOption.addEventListener("change", function () {
   if (albumOption.checked) {
     artistOption.checked = false;
@@ -48,7 +78,6 @@ albumOption.addEventListener("change", function () {
   } else {
   }
 });
-let genreOption = document.querySelector("#genreOption");
 genreOption.addEventListener("change", function () {
   if (genreOption.checked) {
     artistOption.checked = false;
@@ -59,8 +88,7 @@ genreOption.addEventListener("change", function () {
   } else {
   }
 });
-
-let explicitPermission = document.querySelector("#explicitPermission");
+// explicit permission option:
 explicitPermission.addEventListener("change", function () {
   if (explicitPermission.checked) {
     let searchExplicitness = "&explicit=y";
@@ -72,7 +100,7 @@ explicitPermission.addEventListener("change", function () {
     console.log(searchExplicitness);
   }
 });
-let defaultServer = document.querySelector("#defaultServer");
+// server selector:
 defaultServer.addEventListener("change", function () {
   if (defaultServer.checked) {
     proxyServer.checked = false;
@@ -81,7 +109,6 @@ defaultServer.addEventListener("change", function () {
   } else {
   }
 });
-let proxyServer = document.querySelector("#proxyServer");
 proxyServer.addEventListener("change", function () {
   if (proxyServer.checked) {
     defaultServer.checked = false;
@@ -91,12 +118,13 @@ proxyServer.addEventListener("change", function () {
   }
 });
 
+//refresh is SUPPOSED to happen here, followed by GET function
 function refreshResults(eachResult) {
   while (eachResult.firstChild) {
     eachResult.removeChild(eachResult.firstChild);
   }
 }
-fetch(`${serverSetup}${searchTerm}${searchType}${searchExplicitness}`, {
+fetch(linkToGET, {
   method: "GET",
   //   headers: {},
 })
