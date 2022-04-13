@@ -64,9 +64,11 @@ let explicitPermission = document.querySelector("#explicitPermission");
 explicitPermission.addEventListener("change", function () {
   if (explicitPermission.checked) {
     let searchExplicitness = "&explicit=y";
+    refreshResults(resultView);
     console.log(searchExplicitness);
   } else {
     let searchExplicitness = "&explict=n";
+    refreshResults(resultView);
     console.log(searchExplicitness);
   }
 });
@@ -89,6 +91,11 @@ proxyServer.addEventListener("change", function () {
   }
 });
 
+function refreshResults(eachResult) {
+  while (eachResult.firstChild) {
+    eachResult.removeChild(eachResult.firstChild);
+  }
+}
 fetch(`${serverSetup}${searchTerm}${searchType}${searchExplicitness}`, {
   method: "GET",
   //   headers: {},
