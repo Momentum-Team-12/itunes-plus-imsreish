@@ -14,15 +14,25 @@ const proxyServerLink = "https://proxy-itunes-api.glitch.me/";
 let serverSetup = appleServerLink;
 // query string:
 const serverQuery = "search?term=";
-// This will refer to the 'starter searches' referenced above, and may be changed by the user:
+// This will refer to the 'starter searches' variable,
+// and may be changed by the user:
 let searchTerm = encodeURIComponent(`${"tate mcrae"}`);
 // This may not be changed:
 const searchType = "&media=music";
 // These may also be changed by the user:
 let searchEntity = "&entity=musicArtist";
 let searchExplicitness = "&explicit=y";
+// make the array:
+let linkArray = [
+  serverSetup,
+  serverQuery,
+  searchTerm,
+  searchType,
+  searchExplicitness,
+];
 // the full link to GET:
-let linkToGET = `${serverSetup}${serverQuery}${searchTerm}${searchType}${searchExplicitness}`;
+// the "" is to tell JavaScript to make the separators empty strings as opposed to commas
+let linkToGET = linkArray.join("");
 //
 
 // search interface logic is built here:
@@ -36,6 +46,7 @@ searchBar.addEventListener("change", function () {
 });
 
 // button logic is built here, in order of appearance:
+// first, the variables:
 // search refiners:
 let artistOption = document.querySelector("#artistOption");
 let songOption = document.querySelector("#songOption");
@@ -46,7 +57,7 @@ let explicitPermission = document.querySelector("#explicitPermission");
 // server selector:
 let defaultServer = document.querySelector("#defaultServer");
 let proxyServer = document.querySelector("#proxyServer");
-// event listeners/functions for each of these elements, in order of appearance:
+// then, the functions, in order of appearance:
 // search refiners:
 artistOption.addEventListener("change", function () {
   if (artistOption.checked) {
@@ -118,67 +129,74 @@ proxyServer.addEventListener("change", function () {
   }
 });
 
-//refresh is SUPPOSED to happen here, followed by GET function
+//refresh is SUPPOSED to happen here, followed by GET function:
 function refreshResults(eachResult) {
   while (eachResult.firstChild) {
     eachResult.removeChild(eachResult.firstChild);
   }
 }
-fetch(linkToGET, {
-  method: "GET",
-  //   headers: {},
-})
-  .then(function (response) {
-    return response.json();
+
+//GET function:
+function userSearch(anyLink) {
+  fetch(anyLink, {
+    method: "GET",
+    //   headers: {},
   })
-  .then(function (data) {
-    console.log(data);
-    console.log(data.results);
-    console.log(data.resultCount);
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      console.log(data.results);
+      console.log(data.resultCount);
 
-    for (let singleResult of data.results) {
-      console.log(singleResult);
+      for (let singleResult of data.results) {
+        console.log(singleResult);
 
-      // Album art is contained here
-      let albumArtContainer = document.createElement("div");
+        // Album art is contained here
+        let albumArtContainer = document.createElement("div");
 
-      var albumArtDirectLink = singleResult.artworkUrl100.toString();
-      console.log(albumArtDirectLink);
-      let albumArtConvertedLink =
-        albumArtDirectLink.slice(0, -13) + "1000x1000bb.jpg";
-      console.log(albumArtConvertedLink);
-      let albumArt = document.createElement("img");
-      //   albumArt.src = singleResult.artworkUrl100;
-      albumArt.src = albumArtConvertedLink;
-      albumArt.classList.add("albumArt");
-      albumArtContainer.appendChild(albumArt);
+        var albumArtDirectLink = singleResult.artworkUrl100.toString();
+        console.log(albumArtDirectLink);
+        let albumArtConvertedLink =
+          albumArtDirectLink.slice(0, -13) + "1000x1000bb.jpg";
+        console.log(albumArtConvertedLink);
+        let albumArt = document.createElement("img");
+        //   albumArt.src = singleResult.artworkUrl100;
+        albumArt.src = albumArtConvertedLink;
+        albumArt.classList.add("albumArt");
+        albumArtContainer.appendChild(albumArt);
 
-      // Other song metadata contained here
-      let songDetails = document.createElement("div");
+        // Other song metadata contained here
+        let songDetails = document.createElement("div");
 
-      let songTitle = document.createElement("p");
-      songTitle.innerText = singleResult.trackName;
-      songTitle.classList.add("songTitle");
-      if (singleResult.trackExplicitness === "explicit") {
-        songTitle.innerText = `${singleResult.trackName} E`;
+        let songTitle = document.createElement("p");
+        songTitle.innerText = singleResult.trackName;
+        songTitle.classList.add("songTitle");
+        if (singleResult.trackExplicitness === "explicit") {
+          songTitle.innerText = `${singleResult.trackName} E`;
+        }
+        songDetails.appendChild(songTitle);
+
+        let songArtist = document.createElement("p");
+        songArtist.innerText = singleResult.artistName;
+        console.log(singleResult.artistName);
+        songDetails.appendChild(songArtist);
+
+        let albumName = document.createElement("p");
+        albumName.innerText = singleResult.collectionName;
+        console.log(singleResult.collectionName);
+        songDetails.appendChild(albumName);
+
+        let resultContainer = document.createElement("div");
+        resultContainer.appendChild(albumArtContainer);
+        resultContainer.appendChild(songDetails);
+        resultContainer.classList.add("resultContainer");
+        resultView.appendChild(resultContainer);
+        // Each result is wrapped in this container
       }
-      songDetails.appendChild(songTitle);
+    });
+}
 
-      let songArtist = document.createElement("p");
-      songArtist.innerText = singleResult.artistName;
-      console.log(singleResult.artistName);
-      songDetails.appendChild(songArtist);
-
-      let albumName = document.createElement("p");
-      albumName.innerText = singleResult.collectionName;
-      console.log(singleResult.collectionName);
-      songDetails.appendChild(albumName);
-
-      let resultContainer = document.createElement("div");
-      resultContainer.appendChild(albumArtContainer);
-      resultContainer.appendChild(songDetails);
-      resultContainer.classList.add("resultContainer");
-      resultView.appendChild(resultContainer);
-      // Each result is wrapped in this container
-    }
-  });
+// call the function:
+userSearch(linkToGET);
