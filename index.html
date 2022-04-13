@@ -25,25 +25,23 @@
     <input type="text" required id="searchBar" placeholder="search for anything...">
     <div id="resultView"></div>
 </div> -->
-<form action="" method="get">
+<form id="searchForm" action="" method="get">
     <div id="controlBar">
         <div id="attributeControl">
-            <input type="radio" checked id="artistOption">artist</input>
-            <input type="radio" id="songOption" value="value2">song</input>
-            <input type="radio" id="albumOption" value="value3">album</input>
-            <input type="radio" id="genreOption" value="value4">genre</input>
-            <input type="checkbox" checked id="explicitPermission">Allow explicit results</input>
+            <input type="radio" name="searchParam" checked id="artistOption">artist</input>
+            <input type="radio" name="searchParam" id="songOption" value="value2">song</input>
+            <input type="radio" name="searchParam" id="albumOption" value="value3">album</input>
+            <input type="radio" name="searchParam" id="genreOption" value="value4">genre</input>
+            <input type="checkbox" id="explicitPermission">Disallow explicit results</input>
         </div>
         <div id="serverControl">
-            <input type="radio" checked id="defaultServer">default server</input>
-            <input type="radio" id="proxyServer">proxy server</input>
+            <input type="radio" name="serverSwitch" checked id="defaultServer">default server</input>
+            <input type="radio" name="serverSwitch" id="proxyServer">proxy server</input>
         </div>
     </div>
     <div id="searchElements">
-        <div id="resultView">
             <input type="text" required id="searchBar" placeholder="search for anything...">
             <p>search suggestion/result text here</p>
-        </div>
     </div>
 </form>
 <div id="resultView"></div>
