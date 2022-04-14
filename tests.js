@@ -81,6 +81,13 @@ searchBar.addEventListener("input", function (event) {
   if (searchBar.value !== "") {
     searchTerm = encodeURIComponent(searchBar.value);
   }
+  if (searchBar.value === "") {
+    function removeOldResults(eachResult) {
+      while (eachResult.firstChild) {
+        eachResult.removeChild(eachResult.firstChild);
+      }
+    }
+  }
   userSearch(linkToGET());
 });
 //
@@ -112,7 +119,12 @@ function userSearch(searchLink) {
       removeOldResults(resultView);
       for (let singleResult of data.results) {
         let resultInfo = document.querySelector("#resultInfo");
-        resultInfo.innerText = `${data.results.length} results found for ${searchBar.value}`;
+        if (searchBar.value !== "") {
+          resultInfo.innerText = `${data.results.length} results found for ${searchBar.value}`;
+        }
+        if (searchBar.value === "") {
+          resultInfo.innerText = `${data.results.length} results found`;
+        }
         // console.log(singleResult);
         // checking to see if result is of type "track"
         if (searchEntity === "" || searchEntity === "&entity=song") {
@@ -138,15 +150,15 @@ function userSearch(searchLink) {
           // Other song metadata contained here
           let songDetails = document.createElement("div");
           let songTitle = document.createElement("p");
-          songTitle.innerText = singleResult.trackName;
+          songTitle.innerText = `♪ ${singleResult.trackName}`;
           songTitle.classList.add("songTitle");
           if (singleResult.trackExplicitness === "explicit") {
-            songTitle.innerText = `${singleResult.trackName} 🅴`;
+            songTitle.innerText = `♪ ${singleResult.trackName} 🅴`;
           }
           songDetails.appendChild(songTitle);
           //
           let artistName = document.createElement("p");
-          artistName.innerText = singleResult.artistName;
+          artistName.innerText = `👤 ${singleResult.artistName}`;
           artistName.classList.add("artistName");
           // console.log(singleResult.artistName);
           songDetails.appendChild(artistName);

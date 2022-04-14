@@ -1,3 +1,7 @@
+* {
+    font-family: 'Jost', sans-serif;
+}
+
 .resultContainer {
     display: flex;
     align-content: center;
@@ -41,6 +45,7 @@
 }
 
 .releaseInfo {
-    /* unstyled */
+    font-size: 12px;
+    font-weight: lighter;
 }
 
