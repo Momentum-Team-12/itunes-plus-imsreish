@@ -147,11 +147,13 @@ function userSearch(searchLink) {
           //
           let artistName = document.createElement("p");
           artistName.innerText = singleResult.artistName;
+          artistName.classList.add("artistName");
           // console.log(singleResult.artistName);
           songDetails.appendChild(artistName);
           //
           let albumName = document.createElement("p");
           albumName.innerText = singleResult.collectionName;
+          albumName.classList.add("albumName");
           // console.log(singleResult.collectionName);
           songDetails.appendChild(albumName);
           //
@@ -159,6 +161,7 @@ function userSearch(searchLink) {
           releaseInfo.innerText = `${singleResult.releaseDate.slice(0, 4)}∙${
             singleResult.primaryGenreName
           }`;
+          releaseInfo.classList.add("releaseInfo");
           songDetails.appendChild(releaseInfo);
           //
           let resultContainer = document.createElement("div");
@@ -192,11 +195,13 @@ function userSearch(searchLink) {
           let songDetails = document.createElement("div");
           let largeAlbumName = document.createElement("p");
           largeAlbumName.innerText = singleResult.collectionName;
+          largeAlbumName.classList.add("largeAlbumName");
           // console.log(singleResult.collectionName);
           songDetails.appendChild(largeAlbumName);
           //
           let artistName = document.createElement("p");
           artistName.innerText = singleResult.artistName;
+          artistName.classList.add("artistName");
           // console.log(singleResult.artistName);
           songDetails.appendChild(artistName);
           //
@@ -204,6 +209,7 @@ function userSearch(searchLink) {
           releaseInfo.innerText = `${singleResult.releaseDate.slice(0, 4)}∙${
             singleResult.primaryGenreName
           }`;
+          releaseInfo.classList.add("releaseInfo");
           songDetails.appendChild(releaseInfo);
           //
           let resultContainer = document.createElement("div");
