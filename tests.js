@@ -90,7 +90,6 @@ searchBar.addEventListener("input", function (event) {
   }
   userSearch(linkToGET());
 });
-//
 
 // Declaring container div for all results
 let resultView = document.querySelector("#resultView");
