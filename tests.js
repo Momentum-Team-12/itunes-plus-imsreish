@@ -3,7 +3,7 @@ const appleServerLink = "https://itunes.apple.com/";
 const proxyServerLink = "https://proxy-itunes-api.glitch.me/";
 let serverSetup = appleServerLink;
 const serverQuery = "search?term=";
-let searchTerm = encodeURIComponent(`${"tate mcrae"}`);
+let searchTerm = "";
 const searchType = "&media=music";
 let searchEntity = "";
 let searchExplicitness = "&explicit=y";
@@ -164,7 +164,7 @@ function userSearch(searchLink) {
           songDetails.appendChild(artistName);
           //
           let albumName = document.createElement("p");
-          albumName.innerText = singleResult.collectionName;
+          albumName.innerText = `💿 ${singleResult.collectionName}`;
           albumName.classList.add("albumName");
           // console.log(singleResult.collectionName);
           songDetails.appendChild(albumName);
@@ -206,13 +206,13 @@ function userSearch(searchLink) {
           // Other song metadata contained here
           let songDetails = document.createElement("div");
           let largeAlbumName = document.createElement("p");
-          largeAlbumName.innerText = singleResult.collectionName;
+          largeAlbumName.innerText = `💿 ${singleResult.collectionName}`;
           largeAlbumName.classList.add("largeAlbumName");
           // console.log(singleResult.collectionName);
           songDetails.appendChild(largeAlbumName);
           //
           let artistName = document.createElement("p");
-          artistName.innerText = singleResult.artistName;
+          artistName.innerText = `👤 ${singleResult.artistName}`;
           artistName.classList.add("artistName");
           // console.log(singleResult.artistName);
           songDetails.appendChild(artistName);
@@ -227,6 +227,18 @@ function userSearch(searchLink) {
           let resultContainer = document.createElement("div");
           resultContainer.appendChild(albumArtContainer);
           resultContainer.appendChild(songDetails);
+          resultContainer.classList.add("resultContainer");
+          resultView.appendChild(resultContainer);
+          // Each result is wrapped in this container
+        }
+        if (searchEntity === "&entity=musicArtist") {
+          // console.log(singleResult.WrapperType);
+          let largeArtistName = document.createElement("p");
+          largeArtistName.innerText = `👤 ${singleResult.artistName}`;
+          largeArtistName.classList.add("largeArtistName");
+          // console.log(singleResult.artistName);
+          let resultContainer = document.createElement("div");
+          resultContainer.appendChild(largeArtistName);
           resultContainer.classList.add("resultContainer");
           resultView.appendChild(resultContainer);
           // Each result is wrapped in this container

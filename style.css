@@ -1,5 +1,15 @@
 * {
     font-family: 'Jost', sans-serif;
+    color: #ffffff
+}
+
+body {
+    background-color: #264578;
+}
+
+#searchBar {
+    background-color: #ffffff;
+    color: #264578;
 }
 
 .resultContainer {
@@ -13,6 +23,10 @@
     flex-wrap: wrap;
     align-content: flex-start;
 } */
+
+.albumArtContainer {
+    width: 100%
+}
 
 .albumArt {
     width: 15%;
@@ -31,6 +45,11 @@
 
 .artistName {
     font-size: 16px;
+    font-weight: bold;
+}
+
+.largeArtistName {
+    font-size: 25px;
     font-weight: bold;
 }
 
