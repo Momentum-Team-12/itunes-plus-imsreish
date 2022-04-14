@@ -1,12 +1,7 @@
 console.log("iTunes JS is connected");
-
-// Declaring container div for all results
-let resultView = document.querySelector("#resultView");
 //
-
 // Random assortment of 'starter searches' to be implemented here:
 //
-
 // INITIAL SETUP- contructing a search and defining its default parameters:
 // domain:
 const appleServerLink = "https://itunes.apple.com/";
@@ -20,12 +15,13 @@ let searchTerm = encodeURIComponent(`${"lcd soundsystem"}`);
 // This may not be changed:
 const searchType = "&media=music";
 // These may also be changed by the user:
-let searchEntity = "&entity=musicArtist";
+let searchEntity = "";
 let searchExplicitness = "&explicit=y";
 // make the array:
 let linkArray = [];
 // the full link to GET:
 // the "" is to tell JavaScript to make the separators empty strings as opposed to commas
+// let linkToGET = `${serverSetup}${serverQuery}${searchTerm}${searchType}${searchEntity}${searchExplicitness}`;
 function linkToGET() {
   linkArray = [
     serverSetup,
@@ -37,78 +33,62 @@ function linkToGET() {
   ];
   return linkArray.join("");
 }
-//
 
-// button logic is built here, in order of appearance:
-// first, the variables:
-// search refiners:
-//
-//implement later
-// let everythingOption = document.querySelector("#everythingOption")
-//implement later^^
-//
 let searchBar = document.querySelector("#searchBar");
 //
+
+let attributeControls = document.querySelector("#attributeControls");
+let allOption = document.querySelector("#allOption");
 let artistOption = document.querySelector("#artistOption");
 let songOption = document.querySelector("#songOption");
 let albumOption = document.querySelector("#albumOption");
-let genreOption = document.querySelector("#genreOption");
-// explicit permission option:
+//
+attributeControls.addEventListener("change", function (event) {
+  console.log(event.target);
+  if (allOption.checked) {
+    searchEntity = "";
+    console.log(searchEntity);
+  }
+  if (artistOption.checked) {
+    searchEntity = "&entity=musicArtist";
+    console.log(searchEntity);
+  }
+  if (songOption.checked) {
+    searchEntity = "&entity=song";
+    console.log(searchEntity);
+  }
+  if (albumOption.checked) {
+    searchEntity = "&entity=album";
+    console.log(searchEntity);
+  }
+  userSearch(linkToGET());
+});
+
 let explicitPermission = document.querySelector("#explicitPermission");
-// server selector:
+//
+explicitPermission.addEventListener("change", function (event) {
+  if (explicitPermission.checked) {
+    searchExplicitness = "&explicit=y";
+    console.log(searchExplicitness);
+  }
+  if (explicitPermission.unchecked) {
+    searchExplicitness = "&explicit=n";
+    console.log(searchExplicitness);
+  }
+  userSearch(linkToGET());
+});
+let serverControls = document.querySelector("#serverControls");
 let defaultServer = document.querySelector("#defaultServer");
 let proxyServer = document.querySelector("#proxyServer");
-// then, the functions, in order of appearance:
-// search refiners:
-
-let searchForm = document.querySelector("#searchForm");
-searchForm.addEventListener("change", function (event) {
-  console.log(event.target);
-  if (searchForm.artistOption.checked) {
-    searchEntity = "&entity=musicArtist";
-    // userSearch(linkToGET());
-    console.log(searchEntity);
-  }
-  if (searchForm.songOption.checked) {
-    searchEntity = "&entity=song";
-    // userSearch(linkToGET());
-    console.log(searchEntity);
-  }
-  if (searchForm.albumOption.checked) {
-    searchEntity = "&entity=album";
-    // userSearch(linkToGET());
-    console.log(searchEntity);
-  }
-  //   if (searchForm.genreOption.checked) {
-  //     console.log(searchEntity);
-  //     userSearch(linkToGET);
-  //   }
-  if (searchForm.explicitPermission.checked) {
-    searchExplicitness = "&explict=n";
-    refreshResults(resultView);
-    // userSearch(linkToGET());
-    console.log(searchExplicitness);
-  }
-  if (searchForm.explicitPermission.unchecked) {
-    searchExplicitness = "&explicit=y";
-    refreshResults(resultView);
-    // userSearch(linkToGET());
-    console.log(searchExplicitness);
-  }
-  if (searchForm.defaultServer.checked) {
+//
+serverControls.addEventListener("change", function (event) {
+  if (defaultServer.checked) {
     serverSetup = appleServerLink;
-    // userSearch(linkToGET());
     console.log(serverSetup);
   }
-  if (searchForm.proxyServer.checked) {
+  if (proxyServer.checked) {
     serverSetup = proxyServerLink;
-    // userSearch(linkToGET());
     console.log(serverSetup);
-  }
-  if (searchBar.value !== null) {
-    searchTerm = encodeURIComponent(`${searchBar.value}`);
-    // userSearch(linkToGET());
-    console.log(searchTerm);
   }
   userSearch(linkToGET());
 });
@@ -119,6 +99,9 @@ function refreshResults(eachResult) {
     eachResult.removeChild(eachResult.firstChild);
   }
 }
+
+// Declaring container div for all results
+let resultView = document.querySelector("#resultView");
 
 // call the GET function:
 // userSearch(linkToGET);
