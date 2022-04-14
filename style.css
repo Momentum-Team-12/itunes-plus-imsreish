@@ -15,6 +15,11 @@
     border-radius: 5%;
 }
 
+.largeAlbumArt {
+    width: 25%;
+    border-radius: 5%;
+}
+
 .songTitle {
     font-size: 20px;
     font-weight: bold;
