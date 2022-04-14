@@ -111,9 +111,11 @@ function userSearch(searchLink) {
       //   console.log(data.resultCount);
       removeOldResults(resultView);
       for (let singleResult of data.results) {
+        let resultInfo = document.querySelector("#resultInfo");
+        resultInfo.innerText = `${data.results.length} results found for ${searchBar.value}`;
         // console.log(singleResult);
         // checking to see if result is of type "track"
-        if (searchEntity === "&entity=song" || searchEntity === "") {
+        if (searchEntity === "" || searchEntity === "&entity=song") {
           console.log(singleResult.WrapperType);
           let albumArtContainer = document.createElement("div");
           if (singleResult.artworkUrl100 === undefined) {
@@ -143,15 +145,21 @@ function userSearch(searchLink) {
           }
           songDetails.appendChild(songTitle);
           //
-          let songArtist = document.createElement("p");
-          songArtist.innerText = singleResult.artistName;
+          let artistName = document.createElement("p");
+          artistName.innerText = singleResult.artistName;
           // console.log(singleResult.artistName);
-          songDetails.appendChild(songArtist);
+          songDetails.appendChild(artistName);
           //
           let albumName = document.createElement("p");
           albumName.innerText = singleResult.collectionName;
           // console.log(singleResult.collectionName);
           songDetails.appendChild(albumName);
+          //
+          let releaseInfo = document.createElement("p");
+          releaseInfo.innerText = `${singleResult.releaseDate.slice(0, 4)}∙${
+            singleResult.primaryGenreName
+          }`;
+          songDetails.appendChild(releaseInfo);
           //
           let resultContainer = document.createElement("div");
           resultContainer.appendChild(albumArtContainer);
@@ -159,8 +167,51 @@ function userSearch(searchLink) {
           resultContainer.classList.add("resultContainer");
           resultView.appendChild(resultContainer);
           // Each result is wrapped in this container
+        }
+        if (searchEntity === "&entity=album") {
+          console.log(singleResult.WrapperType);
+          let albumArtContainer = document.createElement("div");
+          if (singleResult.artworkUrl100 === undefined) {
+            let largeAlbumArt = document.createElement("img");
+            largeAlbumArt.classList.add("largeAlbumArt");
+            albumArtContainer.appendChild(largeAlbumArt);
+          }
+          if (singleResult.artworkUrl100 !== undefined) {
+            var albumArtDirectLink = singleResult.artworkUrl100.toString();
+            // console.log(albumArtDirectLink);
+            let albumArtConvertedLink =
+              albumArtDirectLink.slice(0, -13) + "1000x1000bb.jpg";
+            // console.log(albumArtConvertedLink);
+            let largeAlbumArt = document.createElement("img");
+            largeAlbumArt.src = singleResult.artworkUrl100;
+            largeAlbumArt.src = albumArtConvertedLink;
+            largeAlbumArt.classList.add("largeAlbumArt");
+            albumArtContainer.appendChild(largeAlbumArt);
+          }
+          // Other song metadata contained here
+          let songDetails = document.createElement("div");
+          let largeAlbumName = document.createElement("p");
+          largeAlbumName.innerText = singleResult.collectionName;
+          // console.log(singleResult.collectionName);
+          songDetails.appendChild(largeAlbumName);
           //
+          let artistName = document.createElement("p");
+          artistName.innerText = singleResult.artistName;
+          // console.log(singleResult.artistName);
+          songDetails.appendChild(artistName);
           //
+          let releaseInfo = document.createElement("p");
+          releaseInfo.innerText = `${singleResult.releaseDate.slice(0, 4)}∙${
+            singleResult.primaryGenreName
+          }`;
+          songDetails.appendChild(releaseInfo);
+          //
+          let resultContainer = document.createElement("div");
+          resultContainer.appendChild(albumArtContainer);
+          resultContainer.appendChild(songDetails);
+          resultContainer.classList.add("resultContainer");
+          resultView.appendChild(resultContainer);
+          // Each result is wrapped in this container
         }
       }
     });

@@ -1,6 +1,6 @@
 .resultContainer {
     display: flex;
-    align-items: center;
+    align-content: center;
 }
 
 /* #resultsDisplay {
@@ -25,10 +25,6 @@
     font-weight: bold;
 }
 
-.songRating {
-    font-size: 14px;
-}
-
 .artistName {
     font-size: 16px;
     font-weight: bold;
@@ -37,5 +33,10 @@
 .albumName {
     font-size: 16px;
     font-weight: lighter;
+}
+
+.largeAlbumName {
+    font-size: 25px;
+    font-weight: bold;
 }
 
